@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>생각의우주 활동 자료 전시관</title>
+<meta name="description" content="군산금빛초등학교 생각의우주 동아리의 1년 활동을 다섯 전시관에 나누어 전시한 온라인 전시관">
+<meta property="og:title" content="생각의우주 활동 자료 전시관">
+<meta property="og:description" content="생각의우주 동아리 1년 활동 기록">
+<meta name="robots" content="noindex">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style id="page-style">
+/* Layout: 밤하늘 로비(위 메뉴 → 가운데 제목 → 다섯 전시관 열) → 전시실(옆으로 넘기는 벽, 사이사이 우주 장식) → 확대 보기 */
+:root {
+  color-scheme: dark;
+  --p1: #7B74CC; --p2: #B3ABFC; --p3: #D3CCFE; --p4: #93CDFB; --p5: #2496E3;
+  --p6: #1D69D0; --p7: #0D50A6; --p8: #0B3A82; --p9: #071C52;
+  --bg: #071C52;
+  --bg-deep: #050f33;
+  --surface: #0e2766;
+  --fg: #eeedff;
+  --muted: #b9b6e6;
+  --line: rgba(211, 204, 254, 0.22);
+  --accent: #B3ABFC;
+  --accent-fg: #071C52;
+  --floor: #050f33;
+  --w1: #10296a; --w2: #0d2f78; --w3: #221f63; --w4: #0b3a82; --w5: #1a1650;
+  --shadow: rgba(2, 6, 24, 0.7);
+  --frame: #1b1650;
+  --mat: #f7f6ff;
+  --font-display: "Gowun Batang", "Noto Serif KR", serif;
+  --font-body: "Noto Sans KR", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg-deep) linear-gradient(180deg, var(--p9) 0%, #08215e 45%, var(--p8) 100%) fixed;
+  color: var(--fg);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.6;
+  word-break: keep-all; overflow-wrap: break-word;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 28px;
+  min-height: 100vh;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.shell { max-width: 1180px; margin: 0 auto; position: relative; }
+.shell > *:not(.sky) { position: relative; z-index: 1; }
+
+/* 밤하늘 배경: 반짝이는 별 두 겹 + 별똥별 */
+.sky { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.sky i { position: absolute; inset: -10%; background-repeat: repeat; }
+.sky .s1 { background-image:
+  radial-gradient(1px 1px at 20px 30px, #fff 50%, transparent 52%),
+  radial-gradient(1px 1px at 140px 90px, #d3ccfe 50%, transparent 52%),
+  radial-gradient(1.4px 1.4px at 80px 170px, #fff 50%, transparent 52%),
+  radial-gradient(1px 1px at 190px 220px, #93cdfb 50%, transparent 52%);
+  background-size: 230px 250px; opacity: .55; animation: twinkle 5s ease-in-out infinite alternate; }
+.sky .s2 { background-image:
+  radial-gradient(1.6px 1.6px at 60px 60px, #fff 50%, transparent 52%),
+  radial-gradient(1px 1px at 250px 140px, #b3abfc 50%, transparent 52%),
+  radial-gradient(1.2px 1.2px at 170px 300px, #fff 50%, transparent 52%);
+  background-size: 330px 360px; opacity: .25; animation: twinkle 7s ease-in-out infinite alternate-reverse; }
+.sky .glow { inset: auto; width: 70vmax; height: 70vmax; border-radius: 50%; right: -25vmax; top: -30vmax;
+  background: radial-gradient(closest-side, rgba(123, 116, 204, .35), transparent); }
+.sky .meteor { inset: auto; top: 12%; left: 70%; width: 140px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #fff, rgba(147, 205, 251, .6) 30%, transparent);
+  transform: rotate(-28deg); opacity: 0; animation: meteor 9s ease-in 2s infinite; }
+@keyframes twinkle { from { opacity: .2; } to { opacity: .65; } }
+@keyframes meteor { 0% { opacity: 0; transform: translate(0, 0) rotate(-28deg); } 3% { opacity: 1; } 12% { opacity: 0; transform: translate(-340px, 180px) rotate(-28deg); } 100% { opacity: 0; transform: translate(-340px, 180px) rotate(-28deg); } }
+
+/* 위쪽 메뉴 */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap;
+  padding-block: 14px; border-bottom: 1px solid var(--line); margin-bottom: 0; }
+.brand { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; color: var(--p3); display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.brand small { font-family: var(--font-body); font-weight: 400; font-size: .76rem; color: var(--muted); letter-spacing: .02em; }
+.navlinks { display: flex; gap: 4px 16px; flex-wrap: wrap; font-size: .82rem; }
+.navlinks button { background: none; border: 0; padding: 4px 0; color: var(--muted); letter-spacing: .02em; }
+.navlinks button:hover { color: var(--fg); }
+.btn { background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: .86rem; color: var(--fg); }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); font-weight: 700; }
+.btn:disabled { opacity: .4; cursor: default; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+/* 첫 화면 가운데 제목 */
+.hero { position: relative; text-align: center; padding: clamp(48px, 9vw, 96px) 0 clamp(36px, 6vw, 64px); }
+.hero .eyebrow { margin: 0 0 10px; font-size: .78rem; letter-spacing: .18em; color: var(--p4); }
+.lobby-intro { max-width: var(--lobby-w, 60ch); margin: 0 auto 26px; display: grid; gap: 12px; }
+.lobby-intro p, .room-head p, .plaque > span { white-space: pre-line; }
+.lobby-intro h1 { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.2; margin: 0; text-wrap: balance; color: #fff; text-shadow: 0 0 30px rgba(179, 171, 252, .35); }
+.lobby-intro p { margin: 0; color: var(--muted); text-wrap: pretty; }
+.pill { display: inline-block; background: var(--accent); color: var(--accent-fg); border: 0; border-radius: 999px; padding: 10px 24px; font-weight: 700; font-size: .9rem; box-shadow: 0 0 24px rgba(179, 171, 252, .35); }
+.pill:hover { background: var(--p3); }
+.deco { position: absolute; pointer-events: none; }
+.hero .planet { right: 2%; top: 22%; width: clamp(70px, 11vw, 130px); aspect-ratio: 1; }
+.hero .moon { left: 3%; top: 16%; width: clamp(44px, 6vw, 70px); aspect-ratio: 1; }
+.hero .const { left: 9%; bottom: 8%; width: clamp(90px, 14vw, 160px); opacity: .8; }
+@media (max-width: 640px) { .hero .planet { top: 4%; right: -4%; opacity: .7; } .hero .moon { top: 4%; } .hero .const { display: none; } }
+.divider { display: flex; align-items: center; gap: 14px; color: var(--accent); margin-bottom: 26px; font-size: .9rem; }
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+
+/* 다섯 전시관 열 */
+.doors { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; }
+@media (max-width: 900px) { .doors { grid-template-columns: repeat(2, minmax(0, 1fr)); } .door:last-child { grid-column: span 2; } .door:last-child .door-img { aspect-ratio: 16 / 7; } }
+@media (max-width: 480px) { .doors { grid-template-columns: minmax(0, 1fr); } .door:last-child { grid-column: auto; } .door:last-child .door-img { aspect-ratio: 4 / 3; } }
+.door { display: flex; flex-direction: column; gap: 10px; cursor: pointer; min-width: 0; border-radius: 4px; }
+.door:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
+.door-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; padding-bottom: 8px; border-bottom: 1.5px solid var(--accent);
+  font-family: var(--font-display); font-weight: 700; font-size: 1.12rem; color: #fff; margin: 0; }
+.door-h .arrow { color: var(--accent); font-family: var(--font-body); font-weight: 400; transition: transform .25s ease; }
+.door:hover .door-h .arrow { transform: translateX(4px); }
+.door-img { aspect-ratio: 4 / 3; border-radius: 4px; overflow: hidden; background: var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.door-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+.door:hover .door-img img { transform: scale(1.04); }
+.door-list { display: grid; }
+.door-list > span { padding: 6px 0; border-bottom: 1px solid var(--line); font-size: .84rem; color: var(--muted); }
+.door-list > span.short { color: var(--p4); }
+.door-items { max-height: 10.5em; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--p1) transparent; padding-right: 6px;
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent); mask-image: linear-gradient(180deg, #000 calc(100% - 22px), transparent); }
+.door-items .item { display: block; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: .84rem; color: var(--muted); }
+.door-items .item:last-child { margin-bottom: 18px; }
+.door-items .item:hover { color: var(--fg); }
+.door-items::-webkit-scrollbar { width: 5px; }
+.door-items::-webkit-scrollbar-thumb { background: var(--p1); border-radius: 4px; }
+
+.foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
+.foot b { font-family: var(--font-display); color: var(--p3); font-size: 1rem; }
+
+/* 전시실 */
+#room { padding-top: 22px; }
+.room-head { display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+.room-head h2 { font-family: var(--font-display); font-size: 1.7rem; margin: 0; line-height: 1.3; color: #fff; }
+.room-head p { margin: 0; color: var(--muted); font-size: .92rem; max-width: var(--desc-w, 68ch); text-wrap: pretty; }
+.room-head .grow { flex: 1; min-width: 0; display: grid; gap: 4px; }
+.stage { position: relative; background: var(--wall); border-radius: 6px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); }
+.stage::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: radial-gradient(1px 1px at 30px 40px, rgba(255,255,255,.7) 50%, transparent 52%), radial-gradient(1px 1px at 150px 120px, rgba(211,204,254,.6) 50%, transparent 52%), radial-gradient(1.3px 1.3px at 90px 200px, rgba(255,255,255,.5) 50%, transparent 52%),
+    radial-gradient(60% 80% at 85% 10%, rgba(123,116,204,.28), transparent 70%), radial-gradient(50% 70% at 10% 90%, rgba(36,150,227,.18), transparent 70%);
+  background-size: 210px 240px, 210px 240px, 210px 240px, 100% 100%, 100% 100%; }
+.wall {
+  position: relative; display: flex; align-items: center; gap: clamp(36px, 7vw, 90px);
+  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--p1) transparent;
+  padding: clamp(28px, 6vh, 56px) clamp(28px, 8vw, 110px) clamp(60px, 11vh, 100px);
+  min-height: clamp(380px, 68vh, 640px);
+}
+.stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: clamp(26px, 6vh, 46px); pointer-events: none;
+  background: linear-gradient(180deg, rgba(147,205,251,.25), transparent 3px), var(--floor); }
+.piece { flex: none; scroll-snap-align: center; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.frame {
+  --fh: clamp(190px, 44vh, 400px);
+  height: calc(var(--fh) * var(--s, 1)); aspect-ratio: var(--r, 1);
+  background: var(--mat); border: 0; padding: clamp(8px, 1.4vw, 14px);
+  box-shadow: 0 0 0 clamp(4px, .6vw, 7px) var(--frame), 0 0 0 calc(clamp(4px, .6vw, 7px) + 1px) rgba(179,171,252,.45), 0 18px 34px -8px var(--shadow), 0 0 40px rgba(179,171,252,.18);
+  transition: transform .25s ease; display: block;
+}
+.frame:hover { transform: translateY(-4px); }
+.frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.plaque { font-size: .78rem; color: var(--muted); line-height: 1.4; padding-left: 2px; max-width: var(--plaque-w, 24ch); }
+.plaque b { display: block; color: var(--fg); font-size: .86rem; font-weight: 500; }
+.wdeco { flex: none; align-self: center; width: clamp(70px, 9vw, 110px); opacity: .9; pointer-events: none; }
+.wdeco svg { display: block; width: 100%; height: auto; overflow: visible; }
+.wdeco.up { align-self: flex-start; margin-top: 2vh; }
+.wdeco.down { align-self: flex-end; margin-bottom: 4vh; }
+.spin { transform-origin: center; animation: drift 6s ease-in-out infinite alternate; }
+@keyframes drift { from { transform: translateY(-4px) rotate(-3deg); } to { transform: translateY(4px) rotate(3deg); } }
+.nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 44px; height: 44px; border-radius: 50%; background: rgba(14,39,102,.85); border: 1px solid var(--line); font-size: 1.2rem; line-height: 1; color: var(--fg); }
+.nav.l { left: 10px; } .nav.r { right: 10px; }
+.nav:hover { border-color: var(--accent); }
+.room-foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 14px; font-size: .85rem; color: var(--muted); }
+
+/* 확대 보기 */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(4, 10, 34, .94); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lb img { max-width: 100%; max-height: 72vh; object-fit: contain; box-shadow: 0 20px 50px rgba(0,0,0,.6); }
+.lb .cap { color: #eeedff; text-align: center; max-width: 60ch; }
+.lb .cap b { font-family: var(--font-display); font-size: 1.2rem; display: block; }
+.lb .cap span { color: var(--muted); font-size: .9rem; }
+.lb .bar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.lb .count { color: var(--muted); font-size: .82rem; align-self: center; font-variant-numeric: tabular-nums; }
+.lb.doc { justify-content: flex-start; overflow-y: auto; }
+.lb.doc .cap { order: -3; }
+.lb.doc .bar { order: -2; }
+.lb.doc .bar.pages { order: -1; }
+.lb.doc img { max-height: none; width: min(100%, 860px); flex: none; }
+.lb .bar.pages .btn { border-color: var(--accent); }
+[hidden], .view[hidden], .lb[hidden], .lb [hidden] { display: none !important; }
+
+/* 글 수정 모드 */
+.editbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20 !important; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--accent); border-radius: 8px; padding: 10px 14px; margin: 12px 0; }
+.editbar p { margin: 0; flex: 1; min-width: 0; font-size: .88rem; }
+.editbar .msg { color: var(--muted); font-size: .84rem; }
+.sizes { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 8px 20px; padding-top: 8px; border-top: 1px solid var(--line); font-size: .84rem; }
+.sizes label { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.sizes input[type=range] { width: 140px; max-width: 40vw; accent-color: var(--accent); }
+.sizes output { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 4.5em; }
+body.editing [data-k] { outline: 1.5px dashed var(--accent); outline-offset: 3px; border-radius: 2px; cursor: text; }
+body.editing [data-k]:focus { outline-style: solid; background: var(--surface); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+  .sky i, .spin { animation: none !important; }
+  .sky .meteor { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+  <div class="sky" aria-hidden="true"><i class="glow"></i><i class="s1"></i><i class="s2"></i><i class="meteor"></i></div>
+  <div class="editbar" id="editbar" hidden>
+    <p><b>글 수정 중</b> · 점선 테두리 글자를 눌러 고친 뒤 저장을 누르세요. 설명 글은 엔터로 줄을 바꿀 수 있습니다. <span class="msg" id="editMsg"></span></p>
+    <span class="row"><button class="btn" id="editCancel" type="button">취소</button><button class="btn primary" id="editSave" type="button">저장</button></span>
+    <div class="sizes">
+      <label for="wLobby">첫 화면 안내문 칸 <input type="range" id="wLobby" min="20" max="110" step="1"><output id="oLobby"></output></label>
+      <label for="wDesc">전시관 설명 칸 <input type="range" id="wDesc" min="20" max="110" step="1"><output id="oDesc"></output></label>
+      <label for="wPlaque">사진 설명 칸 <input type="range" id="wPlaque" min="12" max="60" step="1"><output id="oPlaque"></output></label>
+    </div>
+  </div>
+  <div class="top">
+    <div class="brand"><span id="brand" data-k="brand">생각의우주</span><small id="brandSub" data-k="brandSub">군산금빛초등학교</small></div>
+    <nav class="navlinks" id="navlinks" aria-label="전시관 바로 가기"></nav>
+    <button class="btn" id="editStart" type="button" hidden>글 수정</button>
+  </div>
+
+  <section id="lobby" class="view">
+    <div class="hero">
+      <svg class="deco moon" viewBox="0 0 100 100" aria-hidden="true"><defs><mask id="mmask"><rect width="100" height="100" fill="#fff"/><circle cx="64" cy="40" r="38" fill="#000"/></mask></defs><circle cx="50" cy="50" r="40" fill="#D3CCFE" mask="url(#mmask)"/></svg>
+      <svg class="deco planet spin" viewBox="0 0 140 140" aria-hidden="true"><defs><radialGradient id="pg" cx="35%" cy="35%"><stop offset="0" stop-color="#93CDFB"/><stop offset=".6" stop-color="#2496E3"/><stop offset="1" stop-color="#0D50A6"/></radialGradient><clipPath id="pfront"><rect x="0" y="70" width="140" height="70"/></clipPath></defs><g transform="rotate(-18 70 70)"><ellipse cx="70" cy="70" rx="66" ry="15" fill="none" stroke="#B3ABFC" stroke-width="5" opacity=".45"/></g><circle cx="70" cy="70" r="40" fill="url(#pg)"/><g transform="rotate(-18 70 70)"><ellipse cx="70" cy="70" rx="66" ry="15" fill="none" stroke="#D3CCFE" stroke-width="5" clip-path="url(#pfront)"/></g></svg>
+      <svg class="deco const" viewBox="0 0 160 90" aria-hidden="true"><g stroke="#B3ABFC" stroke-width="1" opacity=".6" fill="none"><path d="M10 70 L45 40 L80 52 L115 18 L150 30"/></g><g fill="#fff"><circle cx="10" cy="70" r="2.2"/><circle cx="45" cy="40" r="2.8"/><circle cx="80" cy="52" r="2"/><circle cx="115" cy="18" r="3"/><circle cx="150" cy="30" r="2.2"/></g></svg>
+      <p class="eyebrow">ONLINE EXHIBITION</p>
+      <div class="lobby-intro">
+        <h1 id="lobbyTitle" data-k="lobbyTitle">활동 자료 전시관</h1>
+        <p id="lobbyIntro" data-k="lobbyIntro">생각의우주 동아리가 1년 동안 활동한 내용을 다섯 곳의 전시관에 나누어 전시했습니다.</p>
+      </div>
+      <button class="pill" id="heroGo" type="button">첫 전시관 들어가기 →</button>
+    </div>
+    <div class="divider" aria-hidden="true">✦</div>
+    <div class="doors" id="doors"></div>
+    <footer class="foot"><b id="footBrand">생각의우주</b><span id="footSub"></span></footer>
+  </section>
+
+  <section id="room" class="view" hidden>
+    <div class="room-head">
+      <button class="btn" id="back" type="button">← 로비로</button>
+      <div class="grow"><h2 id="rTitle"></h2><p id="rSub"></p></div>
+    </div>
+    <div class="stage" id="stage">
+      <button class="nav l" id="prev" type="button" aria-label="왼쪽으로 이동">‹</button>
+      <button class="nav r" id="next" type="button" aria-label="오른쪽으로 이동">›</button>
+      <div class="wall" id="wall" tabindex="0" aria-label="전시 벽, 좌우로 스크롤"></div>
+    </div>
+    <div class="room-foot"><span id="rCount" data-k="hint">옆으로 넘기거나 화살표를 누르면 다음 자료를 볼 수 있습니다.</span><span class="row"><button class="btn" id="roomPrev" type="button">이전 전시실</button><button class="btn primary" id="roomNext" type="button">다음 전시실 →</button></span></div>
+  </section>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="사진 확대 보기">
+  <img id="lbImg" alt="">
+  <div class="cap"><b id="lbTitle"></b><span id="lbText"></span></div>
+  <div class="bar">
+    <button class="btn" id="lbPrev" type="button">← 이전 자료</button>
+    <span class="count" id="lbCount"></span>
+    <button class="btn" id="lbNext" type="button">다음 자료 →</button>
+    <button class="btn" id="lbClose" type="button">닫기</button>
+  </div>
+  <div class="bar pages" id="lbPages" hidden>
+    <button class="btn" id="lbPgPrev" type="button">이전 쪽</button>
+    <span class="count" id="lbPg"></span>
+    <button class="btn" id="lbPgNext" type="button">다음 쪽</button>
+  </div>
+</div>
+
+<script type="application/json" id="gallery-data">{
+ "brand": "생각의우주",
+ "brandSub": "군산금빛초등학교 학생중심 인문학 동아리 - AI 독서인문 융합교육",
+ "lobbyTitle": "활동 자료 전시관",
+ "lobbyIntro": "생각의우주 동아리가 1년 동안 활동한 내용을 다섯 곳의 전시관에 나누어 전시했습니다. 전시관을 누르면 안으로 들어갈 수 있고, 사진을 누르면 크게 볼 수 있습니다.",
+ "hint": "옆으로 넘기거나 화살표를 누르면 다음 자료를 볼 수 있습니다.",
+ "rooms": [
+  {
+   "title": "읽고 묻다",
+   "short": "도서 선정과 글쓰기 주제",
+   "wall": "--w1",
+   "tint": "#cddbd2",
+   "ink": "#2f4a3c",
+   "desc": "도서《나의 첫 과학책》과 《초등과학사전》을 선정하여 동아리를 운영하였습니다.",
+   "items": [
+    [
+     "《나의 첫 과학책》 시리즈",
+     "과학의 탄생부터 미래 과학까지 이어지는 20권",
+     1,
+     "books/first-science.jpg"
+    ],
+    [
+     "《초등과학사전》",
+     "과학 개념을 확인을위한 과학 사전",
+     0.722,
+     "books/dictionary.jpg"
+    ],
+    [
+     "권별 글쓰기 주제",
+     "과학 글쓰기 주제 추천 자료",
+     0.707,
+     "books/topics.jpg"
+    ]
+   ]
+  },
+  {
+   "title": "쓰고 고치다",
+   "short": "키위런 독후감과 AI피드백",
+   "wall": "--w2",
+   "tint": "#d0d8e8",
+   "ink": "#2c3c5e",
+   "desc": "키위런에 3문단 독후감을 쓰고, AI 분석 결과를 참고해 다시 고치는 활동을 하였습니다.",
+   "items": [
+    [
+     "정말 궁금해~ 미래는 어떤 모습일까? 미래과학!",
+     "전북Writing AI 분석 결과",
+     0.707,
+     [
+      "0e29-1",
+      "0e29-2",
+      "0e29-3",
+      "0e29-4",
+      "0e29-5"
+     ]
+    ],
+    [
+     "원자와 분자",
+     "전북Writing AI 분석 결과",
+     0.707,
+     [
+      "b6fd-1",
+      "b6fd-2",
+      "b6fd-3",
+      "b6fd-4",
+      "b6fd-5",
+      "b6fd-6"
+     ]
+    ],
+    [
+     "진화론",
+     "전북Writing AI 분석 결과",
+     0.707,
+     [
+      "4ed4-1",
+      "4ed4-2",
+      "4ed4-3",
+      "4ed4-5",
+      "4ed4-6",
+      "4ed4-7"
+     ]
+    ],
+    [
+     "유전의 비밀",
+     "전북Writing AI 분석 결과",
+     0.707,
+     [
+      "05b4-1",
+      "05b4-2",
+      "05b4-3",
+      "05b4-4",
+      "05b4-5",
+      "05b4-6"
+     ]
+    ],
+    [
+     "빅뱅",
+     "전북Writing AI 분석 결과",
+     0.707,
+     [
+      "932d-1",
+      "932d-2",
+      "932d-3",
+      "932d-4",
+      "932d-5"
+     ]
+    ],
+    [
+     "분석 결과지",
+     "학생별로 받은 전북Writing 분석 결과",
+     0.5625,
+     "photos/13.jpg"
+    ],
+    [
+     "분석 결과 읽기",
+     "내 글의 분석 결과를 읽어 보는 모습",
+     1.778,
+     "photos/11.jpg"
+    ],
+    [
+     "함께 살펴보기",
+     "분석 결과를 친구와 함께 살펴보는 모습",
+     1.778,
+     "photos/12.jpg"
+    ]
+   ]
+  },
+  {
+   "title": "그리고 만들다",
+   "short": "AI 도안 과학 슈링클스 키링",
+   "wall": "--w3",
+   "tint": "#e8d2cd",
+   "ink": "#5e3128",
+   "desc": "1학기에 읽은 과학책을 주제로 AI 도안을 만들고, 슈링클스 키링으로 완성하였습니다.",
+   "items": [
+    [
+     "옮겨 그리기",
+     "도안을 슈링클스 종이에 옮겨 그리는 모습",
+     0.5625,
+     "photos/08.jpg"
+    ],
+    [
+     "색칠하기",
+     "옮겨 그린 도안을 색칠하는 모습",
+     1.778,
+     "photos/10.jpg"
+    ],
+    [
+     "잘라 낸 조각",
+     "색칠하고 오려 낸 슈링클스 조각",
+     0.5625,
+     "photos/09.jpg"
+    ],
+    [
+     "열로 굽기",
+     "열을 받아 줄어드는 슈링클스",
+     0.5625,
+     "photos/06.jpg"
+    ],
+    [
+     "완성한 키링",
+     "함께 만든 과학 슈링클스 키링",
+     0.5625,
+     "photos/05.jpg"
+    ],
+    [
+     "SCIENCE 키링",
+     "달, 시험관, 현미경, 원자를 담은 키링",
+     0.5625,
+     "photos/07.jpg"
+    ],
+    [
+     "완성한 키링 ①",
+     "학생들이 만든 과학 슈링클스 키링",
+     0.5625,
+     "photos/01.jpg"
+    ],
+    [
+     "완성한 키링 ②",
+     "학생들이 만든 과학 슈링클스 키링",
+     0.5625,
+     "photos/02.jpg"
+    ],
+    [
+     "완성한 키링 ③",
+     "학생들이 만든 과학 슈링클스 키링",
+     0.5625,
+     "photos/03.jpg"
+    ],
+    [
+     "완성한 키링 ④",
+     "학생들이 만든 과학 슈링클스 키링",
+     0.5625,
+     "photos/04.jpg"
+    ]
+   ]
+  },
+  {
+   "title": "정리해 말하다",
+   "short": "노트북LM을 활용한 독서 인포그래픽",
+   "wall": "--w4",
+   "tint": "#e4dcc0",
+   "ink": "#544522",
+   "desc": "책 내용과 독후감을 노트북LM으로 정리해 독서 인포그래픽을 만들어 발표하였습니다.",
+   "items": [
+    [
+     "자료 넣기",
+     "책 내용과 독후감을 노트북LM에 넣은 화면",
+     1.6
+    ],
+    [
+     "루이 파스퇴르와 백신의 탄생",
+     "《전염병과 백신》을 읽고 만든 독서 인포그래픽",
+     1.792,
+     "info/01.jpg"
+    ],
+    [
+     "독서 인포그래픽 ②",
+     "가장 전하고 싶은 메시지를 담은 독서 인포그래픽",
+     0.75
+    ],
+    [
+     "독서 인포그래픽 ③",
+     "가장 전하고 싶은 메시지를 담은 독서 인포그래픽",
+     0.75
+    ],
+    [
+     "발표하기",
+     "만든 작품을 친구들 앞에서 발표하는 장면",
+     1.5
+    ]
+   ]
+  },
+  {
+   "title": "그려서 전하다",
+   "short": "키위런을 활용한 과학 네 컷 만화",
+   "wall": "--w5",
+   "tint": "#dcd5e8",
+   "ink": "#3d3254",
+   "scale": 0.78,
+   "desc": "읽은 과학책에서 알게 된 내용을 키위런으로 네 컷 만화로 만들어 발표하였습니다.",
+   "items": [
+    [
+     "색깔 불꽃의 비밀",
+     "불꽃 반응과 원소의 색",
+     1.792,
+     "comics/01.jpg"
+    ],
+    [
+     "미생물의 숨겨진 세상",
+     "극한 환경에도 사는 미생물",
+     1.792,
+     "comics/02.jpg"
+    ],
+    [
+     "신기한 물질의 상태 변화",
+     "고체, 액체, 기체",
+     1.792,
+     "comics/03.jpg"
+    ],
+    [
+     "카르타고의 자주빛 유산",
+     "바다 고둥에서 얻은 자주색 염료",
+     1.792,
+     "comics/04.jpg"
+    ],
+    [
+     "곰의 사냥방식",
+     "폭포를 거슬러 오르는 연어와 곰",
+     1.793,
+     "comics/05.jpg"
+    ],
+    [
+     "토성의 신비",
+     "가스로 된 행성과 고리",
+     1.792,
+     "comics/06.jpg"
+    ],
+    [
+     "반짝이는 바퀴의 비밀",
+     "전자기 유도",
+     1.792,
+     "comics/07.jpg"
+    ],
+    [
+     "지구의 경고: 따뜻해지는 이야기",
+     "지구 온난화",
+     1.792,
+     "comics/08.jpg"
+    ],
+    [
+     "동물들의 신기한 특징",
+     "초식·육식, 겨울잠, 변온 동물, 척추",
+     1.792,
+     "comics/09.jpg"
+    ],
+    [
+     "아하! 혈액형의 비밀",
+     "부모에게서 물려받는 유전자",
+     1.792,
+     "comics/10.jpg"
+    ],
+    [
+     "모래산의 지혜",
+     "멈춤각",
+     1.792,
+     "comics/11.jpg"
+    ],
+    [
+     "별똥별의 여행과 만유인력",
+     "혜성, 유성, 만유인력",
+     1.792,
+     "comics/12.jpg"
+    ],
+    [
+     "그림자의 비밀",
+     "빛과 물체의 거리에 따른 그림자 크기",
+     1.792,
+     "comics/13.jpg"
+    ],
+    [
+     "식물의 비밀 여행",
+     "뿌리와 물·양분의 이동",
+     1.792,
+     "comics/14.jpg"
+    ],
+    [
+     "태양의 탄생과 신비",
+     "태양의 크기와 밝기",
+     1.792,
+     "comics/15.jpg"
+    ],
+    [
+     "작은 암석의 비밀",
+     "광물이 모여 된 암석",
+     1.792,
+     "comics/16.jpg"
+    ],
+    [
+     "바다의 영리한 협력자, 범고래",
+     "무리 지어 사냥하는 범고래",
+     1.792,
+     "comics/17.jpg"
+    ],
+    [
+     "몸속 탐험가, 피의 하루",
+     "혈액의 순환과 역할",
+     1.792,
+     "comics/18.jpg"
+    ],
+    [
+     "고양이와 행복한 동거, 위생이 핵심!",
+     "반려동물과 기생충, 위생 관리",
+     1.792,
+     "comics/19.jpg"
+    ],
+    [
+     "네 컷 만화 발표하기",
+     "만든 만화를 화면에 띄우고 발표하는 모습",
+     1.778,
+     "photos/14.jpg"
+    ]
+   ]
+  }
+ ],
+ "layout": {
+  "desc": 110,
+  "lobby": 97,
+  "plaque": 35
+ }
+}</script>
+<script>(function () {
+  var SCRIPT_SRC = document.currentScript ? document.currentScript.textContent : "";
+  var $ = function (id) { return document.getElementById(id); };
+  var DATA_EL = $("gallery-data");
+  var SAVED = JSON.parse(DATA_EL.textContent);
+  var S = JSON.parse(JSON.stringify(SAVED));
+
+  /* 저장할 때 쓰는 원본 틀 (화면에 그리기 전에 붙잡아 둔다) */
+  var SRC = {
+    title: (document.querySelector("title") || {}).outerHTML || "",
+    meta: (document.querySelector('meta[name="claude:viewport-fit-sides"]') || {}).outerHTML || "",
+    font: (document.querySelector('link[href*="fonts.googleapis"]') || {}).outerHTML || "",
+    style: $("page-style").textContent,
+    shell: $("shell").outerHTML,
+    lb: $("lb").outerHTML
+  };
+
+  var SCALE_CYCLE = [0.92, 0.86, 1, 0.9, 0.84];
+  /* 전시 벽 사이사이에 거는 우주 장식 */
+  var DECOS = [
+    '<svg class="spin" viewBox="0 0 120 90"><g transform="rotate(-16 60 45)"><ellipse cx="60" cy="45" rx="56" ry="13" fill="none" stroke="#B3ABFC" stroke-width="4" opacity=".45"/></g><circle cx="60" cy="45" r="26" fill="#7B74CC"/><circle cx="52" cy="37" r="9" fill="#B3ABFC" opacity=".45"/><g transform="rotate(-16 60 45)"><path d="M4 45 A56 13 0 0 0 116 45" fill="none" stroke="#D3CCFE" stroke-width="4"/></g></svg>',
+    '<svg viewBox="0 0 120 120"><g stroke="#93CDFB" stroke-width="1.2" fill="none" opacity=".7"><path d="M14 96 L40 62 L70 74 L92 30 L110 46"/><path d="M70 74 L84 104"/></g><g fill="#FFFFFF"><circle cx="14" cy="96" r="2.6"/><circle cx="40" cy="62" r="3.4"/><circle cx="70" cy="74" r="2.6"/><circle cx="92" cy="30" r="3.8"/><circle cx="110" cy="46" r="2.4"/><circle cx="84" cy="104" r="2.2"/></g></svg>',
+    '<svg class="spin" viewBox="0 0 140 80"><defs><linearGradient id="ctail" x1="0" x2="1"><stop offset="0" stop-color="#93CDFB" stop-opacity="0"/><stop offset="1" stop-color="#93CDFB" stop-opacity=".9"/></linearGradient></defs><path d="M6 20 L104 46 L100 58 Z" fill="url(#ctail)"/><circle cx="110" cy="52" r="12" fill="#D3CCFE"/><circle cx="106" cy="48" r="4" fill="#FFFFFF" opacity=".8"/></svg>',
+    '<svg viewBox="0 0 120 120"><defs><mask id="cm"><rect width="120" height="120" fill="#fff"/><circle cx="74" cy="48" r="34" fill="#000"/></mask></defs><circle cx="58" cy="60" r="36" fill="#D3CCFE" mask="url(#cm)"/><g fill="#FFFFFF"><path d="M96 20 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z"/><circle cx="100" cy="92" r="2.5"/><circle cx="22" cy="24" r="2"/></g></svg>',
+    '<svg class="spin" viewBox="0 0 100 140"><path d="M50 8 C68 26 72 52 68 84 L32 84 C28 52 32 26 50 8Z" fill="#F7F6FF"/><circle cx="50" cy="46" r="10" fill="#2496E3" stroke="#0B3A82" stroke-width="3"/><path d="M32 70 L18 96 L34 90Z M68 70 L82 96 L66 90Z" fill="#7B74CC"/><path d="M38 84 L62 84 L56 100 L44 100Z" fill="#B3ABFC"/><path d="M44 100 Q50 128 56 100Z" fill="#93CDFB" opacity=".9"/></svg>'
+  ];
+  var lobby = $("lobby"), roomView = $("room"), cur = 0, lbRoom = -1, lbIdx = -1, lbPage = 0, editing = false;
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (m) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[m]; }); }
+  function wallColor(r) { return "var(" + S.rooms[r].wall + ")"; }
+  function ed(path, text, tag) { return "<" + (tag || "span") + ' data-k="' + path + '">' + esc(text) + "</" + (tag || "span") + ">"; }
+
+  var phCache = {};
+  function placeholder(r, j) {
+    var room = S.rooms[r], it = room.items[j], key = r + "-" + j + "-" + it[0];
+    if (phCache[key]) return phCache[key];
+    var ratio = it[2], W = 720, H = Math.round(W / ratio);
+    var c = document.createElement("canvas"); c.width = W; c.height = H;
+    var g = c.getContext("2d"), m = Math.min(W, H);
+    g.fillStyle = room.tint; g.fillRect(0, 0, W, H);
+    g.strokeStyle = room.ink; g.globalAlpha = .45; g.lineWidth = 4; g.setLineDash([16, 12]);
+    g.strokeRect(28, 28, W - 56, H - 56); g.globalAlpha = 1; g.setLineDash([]);
+    g.fillStyle = room.ink; g.textAlign = "center"; g.textBaseline = "middle";
+    g.font = "500 38px 'Noto Sans KR', sans-serif";
+    g.fillText(it[0], W / 2, H / 2 - 20);
+    g.globalAlpha = .75; g.font = "400 28px 'Noto Sans KR', sans-serif";
+    g.fillText("사진이 들어갈 자리", W / 2, H / 2 + 32);
+    return (phCache[key] = c.toDataURL("image/png"));
+  }
+  function piece(r, j) {
+    var it = S.rooms[r].items[j];
+    if (Array.isArray(it[3])) {
+      var pages = it[3].map(function (p) { return "reports/" + p + ".jpg"; });
+      return { title: it[0], text: it[1], note: " · " + pages.length + "쪽", ratio: it[2], src: pages[0], pages: pages };
+    }
+    return { title: it[0], text: it[1], note: "", ratio: it[2], src: it[3] || placeholder(r, j) };
+  }
+
+  var WIDTHS = { lobby: ["--lobby-w", 60, "wLobby", "oLobby"], desc: ["--desc-w", 68, "wDesc", "oDesc"], plaque: ["--plaque-w", 24, "wPlaque", "oPlaque"] };
+  function applyLayout() {
+    var L = S.layout || {};
+    Object.keys(WIDTHS).forEach(function (k) {
+      var w = WIDTHS[k], v = L[k] || w[1];
+      document.documentElement.style.setProperty(w[0], v + "ch");
+      $(w[2]).value = v; $(w[3]).textContent = "약 " + v + "자";
+    });
+  }
+  Object.keys(WIDTHS).forEach(function (k) {
+    $(WIDTHS[k][2]).addEventListener("input", function (e) {
+      S.layout = S.layout || {};
+      S.layout[k] = +e.target.value;
+      applyLayout();
+      $("editMsg").textContent = "저장하지 않은 수정이 있습니다.";
+    });
+  });
+  function renderStatic() {
+    ["brand", "brandSub", "lobbyTitle", "lobbyIntro"].forEach(function (k) { $(k).textContent = S[k]; });
+    $("rCount").textContent = S.hint;
+    $("footBrand").textContent = S.brand; $("footSub").textContent = S.brandSub;
+    $("navlinks").innerHTML = S.rooms.map(function (rm, r) { return '<button type="button" data-go="' + r + '">' + esc(rm.title) + '</button>'; }).join("");
+    applyLayout();
+  }
+  function renderDoors() {
+    var html = "";
+    S.rooms.forEach(function (rm, r) {
+      var cover = 0;
+      for (var q = 0; q < rm.items.length; q++) { if (rm.items[q][3]) { cover = q; break; } }
+      var names = rm.items.map(function (it, j) { return it[3] ? '<span class="item" data-j="' + j + '">' + esc(it[0]) + '</span>' : ''; }).join("");
+      html += '<div class="door" role="button" tabindex="0" data-room="' + r + '" aria-label="' + esc(rm.title) + ' 들어가기">' +
+        '<h3 class="door-h"><span>[' + ed("rooms." + r + ".title", rm.title) + ']</span><span class="arrow" aria-hidden="true">→</span></h3>' +
+        '<div class="door-img"><img alt="" src="' + piece(r, cover).src + '"></div>' +
+        '<div class="door-list">' + ed("rooms." + r + ".short", rm.short).replace("<span ", '<span class="short" ') + '<div class="door-items" tabindex="0" aria-label="' + esc(rm.title) + ' 자료 목록">' + names + '</div></div></div>';
+    });
+    $("doors").innerHTML = html;
+    applyEditable($("doors"));
+  }
+  function renderRoom() {
+    var rm = S.rooms[cur];
+    $("rTitle").innerHTML = "[" + ed("rooms." + cur + ".title", rm.title) + "]";
+    $("rSub").innerHTML = ed("rooms." + cur + ".desc", rm.desc);
+    $("stage").style.setProperty("--wall", wallColor(cur));
+    var html = "";
+    var n = rm.items.length, d = cur;
+    rm.items.forEach(function (_, j) {
+      if (j > 0 && j % 3 === 0) { html += '<div class="wdeco ' + (d % 2 ? "up" : "down") + '" aria-hidden="true">' + DECOS[d % DECOS.length] + '</div>'; d++; }
+      var p = piece(cur, j), s = rm.scale || SCALE_CYCLE[j % SCALE_CYCLE.length];
+      html += '<div class="piece"><button class="frame" type="button" data-j="' + j + '" style="--r:' + p.ratio + ';--s:' + s + '" aria-label="' + esc(p.title) + ' 크게 보기"><img alt="' + esc(p.title) + '" src="' + p.src + '" loading="lazy"></button>' +
+        '<div class="plaque"><b>' + ed("rooms." + cur + ".items." + j + ".0", p.title) + '</b>' + ed("rooms." + cur + ".items." + j + ".1", p.text) + esc(p.note) + '</div></div>';
+    });
+    $("wall").innerHTML = html;
+    $("roomPrev").hidden = cur === 0; $("roomNext").hidden = cur === S.rooms.length - 1;
+    applyEditable($("room"));
+  }
+
+  function show(view) { lobby.hidden = view !== "lobby"; roomView.hidden = view !== "room"; window.scrollTo(0, 0); }
+  function enter(r) { cur = r; renderRoom(); $("wall").scrollLeft = 0; show("room"); try { history.replaceState(null, "", "#room-" + (r + 1)); } catch (e) {} }
+  function leave() { renderDoors(); show("lobby"); try { history.replaceState(null, "", "#"); } catch (e) {} }
+
+  function openDoor(e) {
+    if (editing && e.target.closest("[data-k]")) return;
+    var d = e.target.closest(".door"); if (!d) return;
+    enter(+d.dataset.room);
+    var it = e.target.closest(".item");
+    if (it) { var f = document.querySelector('#wall .frame[data-j="' + it.dataset.j + '"]'); if (f) f.closest(".piece").scrollIntoView({ block: "nearest", inline: "center" }); }
+  }
+  $("doors").addEventListener("click", openDoor);
+  $("doors").addEventListener("keydown", function (e) {
+    if (editing && e.target.closest("[data-k]")) return;
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDoor(e); }
+  });
+  $("back").addEventListener("click", leave);
+  $("heroGo").addEventListener("click", function () { if (!editing) enter(0); });
+  $("navlinks").addEventListener("click", function (e) { var b = e.target.closest("[data-go]"); if (b && !editing) enter(+b.dataset.go); });
+  $("roomPrev").addEventListener("click", function () { if (cur > 0) enter(cur - 1); });
+  $("roomNext").addEventListener("click", function () { if (cur < S.rooms.length - 1) enter(cur + 1); });
+  $("wall").addEventListener("click", function (e) { var f = e.target.closest(".frame"); if (f) openLb(cur, +f.dataset.j); });
+  function scrollWall(dir) { var w = $("wall"); w.scrollBy({ left: dir * Math.max(240, w.clientWidth * 0.7), behavior: "smooth" }); }
+  $("prev").addEventListener("click", function () { scrollWall(-1); });
+  $("next").addEventListener("click", function () { scrollWall(1); });
+
+  /* 확대 보기 */
+  function showPage(k) {
+    var p = piece(lbRoom, lbIdx);
+    lbPage = (k + p.pages.length) % p.pages.length;
+    $("lbImg").src = p.pages[lbPage];
+    $("lbPg").textContent = (lbPage + 1) + " / " + p.pages.length + "쪽";
+    $("lb").scrollTop = 0;
+  }
+  function openLb(r, j) {
+    lbRoom = r; lbIdx = j; var rm = S.rooms[r], p = piece(r, j), doc = !!p.pages;
+    $("lbImg").src = p.src; $("lbImg").alt = p.title;
+    $("lbTitle").textContent = p.title; $("lbText").textContent = "[" + rm.title + "] " + p.text + p.note;
+    $("lbCount").textContent = (j + 1) + " / " + rm.items.length;
+    $("lb").classList.toggle("doc", doc);
+    $("lbPages").hidden = !doc;
+    if (doc) showPage(0);
+    $("lb").hidden = false; $("lbClose").focus();
+  }
+  function closeLb() { $("lb").hidden = true; lbRoom = -1; lbIdx = -1; }
+  function stepLb(d) { if (lbRoom < 0) return; var n = S.rooms[lbRoom].items.length; openLb(lbRoom, (lbIdx + d + n) % n); }
+  $("lbPgPrev").addEventListener("click", function () { showPage(lbPage - 1); });
+  $("lbPgNext").addEventListener("click", function () { showPage(lbPage + 1); });
+  $("lbClose").addEventListener("click", closeLb);
+  $("lbPrev").addEventListener("click", function () { stepLb(-1); });
+  $("lbNext").addEventListener("click", function () { stepLb(1); });
+  $("lb").addEventListener("click", function (e) { if (e.target === $("lb")) closeLb(); });
+  document.addEventListener("keydown", function (e) {
+    if (lbRoom < 0) return;
+    if (e.key === "Escape") closeLb(); else if (e.key === "ArrowLeft") stepLb(-1); else if (e.key === "ArrowRight") stepLb(1);
+  });
+
+  /* ── 글 수정 ── */
+  var editMode = (function () { try { var d = document.createElement("div"); d.contentEditable = "plaintext-only"; return d.contentEditable === "plaintext-only" ? "plaintext-only" : "true"; } catch (e) { return "true"; } })();
+  function applyEditable(root) {
+    root.querySelectorAll("[data-k]").forEach(function (el) {
+      if (editing) { el.setAttribute("contenteditable", editMode); el.setAttribute("spellcheck", "false"); }
+      else el.removeAttribute("contenteditable");
+    });
+  }
+  function setPath(path, val) {
+    var ks = path.split("."), o = S;
+    for (var i = 0; i < ks.length - 1; i++) o = o[ks[i]];
+    o[ks[ks.length - 1]] = val;
+  }
+  function isMulti(k) { return k === "lobbyIntro" || /^rooms\.\d+\.desc$/.test(k) || /^rooms\.\d+\.items\.\d+\.1$/.test(k); }
+  function readVal(el) {
+    if (!isMulti(el.dataset.k)) return el.textContent.replace(/\s+/g, " ").trim();
+    return el.innerText.split("\n").map(function (l) { return l.replace(/[ \t ]+/g, " ").trim(); }).join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  }
+  document.addEventListener("input", function (e) {
+    var el = e.target.closest && e.target.closest("[data-k]");
+    if (!editing || !el) return;
+    setPath(el.dataset.k, readVal(el));
+    $("editMsg").textContent = "저장하지 않은 수정이 있습니다.";
+  });
+  document.addEventListener("keydown", function (e) {
+    var el = editing && e.key === "Enter" && e.target.closest && e.target.closest("[data-k]");
+    if (!el) return;
+    if (isMulti(el.dataset.k) && !e.isComposing) {
+      e.preventDefault();
+      document.execCommand("insertLineBreak") || document.execCommand("insertText", false, "\n");
+      return;
+    }
+    e.preventDefault(); e.target.blur();
+  });
+  document.addEventListener("focusout", function (e) {
+    var el = e.target.closest && e.target.closest("[data-k]");
+    if (editing && el && /^rooms\.\d+\.title$/.test(el.dataset.k)) {
+      var k = el.dataset.k;
+      document.querySelectorAll('[data-k="' + k + '"]').forEach(function (o) { if (o !== el) o.textContent = el.textContent; });
+    }
+  });
+  document.addEventListener("paste", function (e) {
+    if (!editing || !(e.target.closest && e.target.closest("[data-k]"))) return;
+    e.preventDefault();
+    var k = e.target.closest("[data-k]").dataset.k;
+    var t = (e.clipboardData || window.clipboardData).getData("text");
+    t = isMulti(k) ? t.replace(/\r/g, "").replace(/[ \t]+/g, " ") : t.replace(/\s+/g, " ");
+    document.execCommand("insertText", false, t);
+  });
+
+  function setEditing(on) {
+    editing = on;
+    document.body.classList.toggle("editing", on);
+    $("editbar").hidden = !on; $("editStart").hidden = on;
+    $("editMsg").textContent = "";
+    applyEditable(document);
+  }
+  $("editStart").addEventListener("click", function () { closeLb(); setEditing(true); });
+  $("editCancel").addEventListener("click", function () {
+    S = JSON.parse(JSON.stringify(SAVED));
+    setEditing(false); renderStatic(); renderDoors(); if (!roomView.hidden) renderRoom();
+  });
+
+  var RESET = ":root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px/1.4 system-ui,-apple-system,sans-serif}img{max-width:100%}[hidden]{display:none!important}";
+  function buildDoc() {
+    var tpl = document.createElement("template");
+    tpl.innerHTML = SRC.shell;
+    var sh = tpl.content.firstElementChild;
+    ["brand", "brandSub", "lobbyTitle", "lobbyIntro"].forEach(function (k) { sh.querySelector("#" + k).textContent = S[k]; });
+    sh.querySelector("#rCount").textContent = S.hint;
+    var json = JSON.stringify(S, null, 1).replace(/</g, "\\u003c");
+    var SC = "scr" + "ipt";
+    return "<!doctype html><html><head><meta charset=utf8><meta name=viewport content=\"width=device-width,initial-scale=1,viewport-fit=cover\"><style>" + RESET + "</style></head><body>" +
+      SRC.title + "\n" + SRC.meta + "\n" + SRC.font + "\n<style id=\"page-style\">" + SRC.style + "</style>\n\n" +
+      sh.outerHTML + "\n\n" + SRC.lb + "\n\n<" + SC + " type=\"application/json\" id=\"gallery-data\">" + json + "</" + SC + ">\n<" + SC + ">" + SCRIPT_SRC + "</" + SC + ">\n</body></html>";
+  }
+  var saving = false;
+  $("editSave").addEventListener("click", async function () {
+    if (saving) return;
+    var a = await claude.use("artifact");
+    if (!a) { $("editMsg").textContent = "이 화면에서는 저장할 수 없습니다."; return; }
+    saving = true; $("editSave").disabled = true; $("editMsg").textContent = "저장 중…";
+    var html = buildDoc();
+    try {
+      try { await a.publish({ "index.html": html }); }
+      catch (err) {
+        if (err && (err.code === "capability_disabled" || err.code === "capability_removed" || err.code === "invalid_content")) await a.publish(html);
+        else throw err;
+      }
+      SAVED = JSON.parse(JSON.stringify(S));
+      setEditing(false);
+      $("editMsg").textContent = "";
+    } catch (err) {
+      var c = err && err.code;
+      if (c === "conflict") $("editMsg").textContent = "다른 곳에서 먼저 저장해서 새 내용으로 다시 불러옵니다.";
+      else if (c === "not_writer" || c === "not_granted" || c === "not_declared") { $("editMsg").textContent = "이 화면에서는 저장할 권한이 없습니다."; }
+      else if (c === "rate_limited") $("editMsg").textContent = "저장이 너무 잦습니다. 잠시 뒤에 다시 눌러 주세요.";
+      else $("editMsg").textContent = "저장하지 못했습니다. 잠시 뒤에 다시 눌러 주세요.";
+    } finally { saving = false; $("editSave").disabled = false; }
+  });
+
+  (async function initEdit() { return;
+    try {
+      if (!window.claude || !claude.use) return;
+      var a = await claude.use("artifact"); if (!a) return;
+      var u = await claude.use("user");
+      if (u && !(await u.canEdit())) return;
+      $("editStart").hidden = false;
+    } catch (e) {}
+  })();
+
+  function start() {
+    renderStatic();
+    renderDoors();
+    var m = /^#room-(\d)$/.exec(location.hash || "");
+    if (m && +m[1] >= 1 && +m[1] <= S.rooms.length) enter(+m[1] - 1);
+  }
+  var started = false;
+  function go() { if (!started) { started = true; start(); } }
+  try { document.fonts.ready.then(go); } catch (e) { go(); }
+  setTimeout(go, 1500);
+})();
+</script>
+</body>
+</html>
