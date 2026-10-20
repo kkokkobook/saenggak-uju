@@ -199,6 +199,42 @@ button { font: inherit; color: inherit; cursor: pointer; }
 body.editing [data-k] { outline: 1.5px dashed var(--accent); outline-offset: 3px; border-radius: 2px; cursor: text; }
 body.editing [data-k]:focus { outline-style: solid; background: var(--surface); }
 
+/* ── 휴대폰 화면 ── */
+@media (max-width: 640px) {
+  .top { padding-block: 12px 10px; gap: 8px; }
+  .brand { font-size: 1.2rem; }
+  .brand small { display: none; }
+  .navlinks { flex-basis: 100%; flex-wrap: nowrap; overflow-x: auto; gap: 6px; scrollbar-width: none; margin-inline: -2px; padding: 2px; }
+  .navlinks::-webkit-scrollbar { display: none; }
+  .navlinks button { flex: none; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-size: .8rem; white-space: nowrap; }
+  .hero { padding: 40px 0 30px; }
+  .lobby-intro { gap: 10px; }
+  .lobby-intro p { font-size: .92rem; }
+  .doors { gap: 26px; }
+  .foot { flex-direction: column; align-items: flex-start; gap: 2px; margin-top: 36px; }
+
+  #room { padding-top: 14px; }
+  .room-head { flex-direction: column; gap: 10px; }
+  .room-head .btn { padding: 6px 14px; font-size: .82rem; }
+  .room-head h2 { font-size: 1.45rem; }
+  .wall { gap: 28px; min-height: 0; padding: 26px 44px 64px; scroll-snap-type: x mandatory; }
+  .frame { height: min(calc(var(--fh) * var(--s, 1)), calc((100vw - 112px) / var(--r, 1))); padding: 7px; }
+  .plaque { max-width: min(var(--plaque-w, 24ch), calc(100vw - 112px)); }
+  .wdeco { width: 54px; }
+  .nav { width: 34px; height: 34px; font-size: 1rem; }
+  .nav.l { left: 5px; } .nav.r { right: 5px; }
+  .room-foot { flex-direction: column; align-items: stretch; }
+  .room-foot .row { justify-content: space-between; }
+}
+@media (max-width: 480px) {
+  .door { display: grid; grid-template-columns: minmax(0, 42%) minmax(0, 1fr); grid-template-areas: "h h" "img list"; gap: 10px 14px; }
+  .door-h { grid-area: h; }
+  .door-img, .door:last-child .door-img { grid-area: img; aspect-ratio: 1 / 1; }
+  .door-list { grid-area: list; min-width: 0; }
+  .door-list > span.short { padding-top: 0; }
+  .door-items { max-height: 8.6em; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; scroll-behavior: auto !important; }
   .sky i, .spin { animation: none !important; }
@@ -476,30 +512,34 @@ body.editing [data-k]:focus { outline-style: solid; background: var(--surface); 
    "desc": "책 내용과 독후감을 노트북LM으로 정리해 독서 인포그래픽을 만들어 발표하였습니다.",
    "items": [
     [
-     "자료 넣기",
-     "책 내용과 독후감을 노트북LM에 넣은 화면",
-     1.6
-    ],
-    [
      "루이 파스퇴르와 백신의 탄생",
      "《전염병과 백신》을 읽고 만든 독서 인포그래픽",
      1.792,
      "info/01.jpg"
     ],
     [
-     "독서 인포그래픽 ②",
-     "가장 전하고 싶은 메시지를 담은 독서 인포그래픽",
-     0.75
+     "진화론: 생명의 비밀을 밝힌 위대한 여정",
+     "《다윈의 진화론》을 읽고 만든 독서 인포그래픽",
+     1.792,
+     "info/02.jpg"
     ],
     [
-     "독서 인포그래픽 ③",
-     "가장 전하고 싶은 메시지를 담은 독서 인포그래픽",
-     0.75
+     "쪼개고 또 쪼개면 나타나는 세상: 원자와 분자",
+     "《원자와 분자》를 읽고 만든 독서 인포그래픽",
+     0.558,
+     "info/03.jpg"
     ],
     [
-     "발표하기",
-     "만든 작품을 친구들 앞에서 발표하는 장면",
-     1.5
+     "달라진 디지털 세상",
+     "《컴퓨터와 인터넷》을 읽고 만든 독서 인포그래픽",
+     1.792,
+     "info/04.jpg"
+    ],
+    [
+     "빅뱅: 138억 년 우주의 탄생과 확장",
+     "《빅뱅》을 읽고 만든 독서 인포그래픽",
+     1.792,
+     "info/05.jpg"
     ]
    ]
   },
